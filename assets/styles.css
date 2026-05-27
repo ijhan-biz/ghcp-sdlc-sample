@@ -271,6 +271,22 @@ h1 {
   box-shadow: 0 7px 14px rgba(31, 90, 138, 0.12);
 }
 
+.ghas-note {
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.ghas-note a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ghas-note a:hover {
+  text-decoration: underline;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
