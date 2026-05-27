@@ -211,7 +211,7 @@ jobs:
                   leaderQuestion: '누가 어떤 기준으로 예외를 승인했는가?',
                   stopCondition: '승인자, 만료일, 로그 제출 계획 누락 시 반려',
                   evidenceLinks: [
-                    '.github/ISSUE_TEMPLATE/tool-exception-request.yml',
+                    'https://github.com/ijhan-biz/ghcp-sdlc-sample/issues/new?template=tool-exception-request.yml&title=%5BEXCEPTION%5D+Tool+Exception+Request',
                     'docs/governance-policy.md',
                     'docs/exception-approval-template.md'
                   ]

@@ -66,7 +66,7 @@ const stages = [
     demo: "AI-assisted 라벨 + 예외승인 템플릿 연결",
     gate: "예외는 Tech Lead + Security 공동 승인",
     kpi: "AI PR 라벨링 >= 95%",
-    evidenceLink: "https://github.com/ijhan-biz/ghcp-sdlc-sample/issues/new?template=tool-exception-request.yml",
+    evidenceLink: "https://github.com/ijhan-biz/ghcp-sdlc-sample/issues/new?template=tool-exception-request.yml&title=%5BEXCEPTION%5D+Tool+Exception+Request",
     evidenceLabel: "Govern 증적 열기 (Exception Template)",
   },
   {
