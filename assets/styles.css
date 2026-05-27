@@ -232,6 +232,45 @@ h1 {
   border-color: #184b74;
 }
 
+.ghas-demo {
+  background: linear-gradient(145deg, #f7fbff 0%, #eef4fa 100%);
+}
+
+.ghas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.7rem;
+  margin-top: 0.85rem;
+}
+
+.ghas-card {
+  display: block;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid #c5d3e0;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 0.85rem;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.ghas-card h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 0.98rem;
+}
+
+.ghas-card p {
+  margin: 0.45rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.ghas-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 7px 14px rgba(31, 90, 138, 0.12);
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
