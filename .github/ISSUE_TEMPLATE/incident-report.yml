@@ -1,5 +1,5 @@
 name: FieldOps Incident Report
-about: 장애 대응 이슈를 생성합니다.
+about: BDD 사고 대응 시나리오를 포함한 장애 이슈를 생성합니다.
 title: "[INCIDENT] "
 labels: ["incident", "fieldops"]
 body:
@@ -18,6 +18,19 @@ body:
       placeholder: "2026-05-27T08:44:00Z"
     validations:
       required: false
+
+  - type: textarea
+    id: bdd_behavior
+    attributes:
+      label: BDD Behavior (Given / When / Then)
+      description: 장애 대응 동작을 시나리오로 작성하세요.
+      placeholder: |
+        Scenario: 장애 감지 후 15분 내 복구
+        Given incident_start가 기록되고
+        When 운영자가 runbook 단계(T+0, T+5, T+10)를 수행하면
+        Then incident_end가 15분 이내로 기록되어야 한다
+    validations:
+      required: true
 
   - type: textarea
     id: impact

@@ -21,10 +21,22 @@ python3 -m http.server 8080
 
 ## GitHub 직접 시연 케이스
 - 케이스 문서: docs/github-sdlc-cases.md
-- Plan/Operate 템플릿: .github/ISSUE_TEMPLATE/
+- Stage 증적 맵: docs/sdlc-stage-evidence-map.md
+- Plan/Operate/Modernize/Models 템플릿: .github/ISSUE_TEMPLATE/
 - Review/Test 증적: .github/CODEOWNERS, .github/pull_request_template.md
 - Build/Deploy 증적: .github/workflows/ci.yml
 - Govern/Models 증적: docs/governance-policy.md, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
+
+## DDD 코드 구조
+- 아키텍처 문서: docs/ddd-architecture.md
+- Domain: src/domain/incidents/
+- Application: src/application/use-cases/
+- Infrastructure: src/infrastructure/repositories/
+- 스모크 테스트: node scripts/ddd-smoke.js
+
+## BDD 이슈 작성 규칙
+- Plan/Incident 이슈는 Given / When / Then 시나리오를 반드시 포함합니다.
+- 템플릿: .github/ISSUE_TEMPLATE/plan-change.yml, .github/ISSUE_TEMPLATE/incident-report.yml
 
 ## 운영 원칙
 - 표준: GitHub-native SDLC 경로

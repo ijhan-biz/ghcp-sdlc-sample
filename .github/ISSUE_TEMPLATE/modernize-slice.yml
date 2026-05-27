@@ -1,0 +1,35 @@
+name: FieldOps Modernize Slice
+about: Modernize 단계를 위한 PR 슬라이스 계획 이슈
+title: "[MODERNIZE] "
+labels: ["modernize", "fieldops"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: Deprecated parser 교체
+        Given legacy parser가 장애 우선순위를 잘못 계산하고
+        When parser 모듈을 신규 정책 기반으로 교체하면
+        Then 기존 API 호환성을 유지한 채 정확한 우선순위를 계산해야 한다
+    validations:
+      required: true
+
+  - type: textarea
+    id: pr_slices
+    attributes:
+      label: PR Slices
+      description: 작은 PR 단위로 분할 계획
+      placeholder: |
+        - [ ] Slice 1: Domain policy 정리
+        - [ ] Slice 2: Use case 변경
+        - [ ] Slice 3: Infra adapter 정리
+    validations:
+      required: true
+
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback Plan
+    validations:
+      required: true

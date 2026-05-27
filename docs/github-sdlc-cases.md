@@ -7,12 +7,12 @@
 ## 1) Plan
 - 시연 위치: Issues 탭
 - 준비물: .github/ISSUE_TEMPLATE/plan-change.yml
-- 확인 포인트: 수용기준(AC), 영향도, 완료 정의가 이슈에 입력되는지
+- 확인 포인트: Given/When/Then 시나리오와 수용기준(AC)이 이슈에 입력되는지
 
 ## 2) Code
 - 시연 위치: Branches + Commits
-- 준비물: feature/incident-priority-fix 브랜치
-- 확인 포인트: 작은 단위 커밋과 테스트 파일 동반 여부
+- 준비물: src/domain, src/application, src/infrastructure 구조
+- 확인 포인트: DDD 레이어 분리(도메인 규칙과 유스케이스 분리) 여부
 
 ## 3) Review & Test
 - 시연 위치: Pull Requests
@@ -27,11 +27,11 @@
 ## 5) Operate
 - 시연 위치: Issues (incident 라벨)
 - 준비물: .github/ISSUE_TEMPLATE/incident-report.yml
-- 확인 포인트: T+0/T+5/T+10 타임라인, 복구 완료 시각
+- 확인 포인트: BDD 시나리오 + T+0/T+5/T+10 타임라인, 복구 완료 시각
 
 ## 6) Modernize
 - 시연 위치: Pull Requests + Projects
-- 준비물: modernize-parser-1/2/3 PR 시리즈
+- 준비물: .github/ISSUE_TEMPLATE/modernize-slice.yml
 - 확인 포인트: PR 분할 전략과 rollback 체크 항목
 
 ## 7) Govern
@@ -41,8 +41,12 @@
 
 ## 8) Models
 - 시연 위치: Repository Files + Actions
-- 준비물: docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
+- 준비물: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
 - 확인 포인트: 모델 사용률과 SLO breach 시 incident 이슈 자동 생성
+
+## 단계별 증적 맵
+- 문서: docs/sdlc-stage-evidence-map.md
+- 목적: SDLC 8단계별 GitHub 시연 위치와 증적 파일을 한 번에 확인
 
 ## 데모 실행 순서 (15분)
 1. Issues에서 Plan/Incident 템플릿 생성

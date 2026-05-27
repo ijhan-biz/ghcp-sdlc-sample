@@ -1,0 +1,37 @@
+name: FieldOps Model Routing Review
+about: Models 단계를 위한 모델 라우팅/비용 정책 검토 이슈
+title: "[MODELS] "
+labels: ["models", "fieldops"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: Premium 모델 사용 승인
+        Given T3 등급 작업 요청이 들어오고
+        When 승인 기준(보안/비용/근거)을 모두 충족하면
+        Then premium 모델 사용이 승인되어야 한다
+    validations:
+      required: true
+
+  - type: dropdown
+    id: work_tier
+    attributes:
+      label: Work Tier
+      options:
+        - T0
+        - T1
+        - T2
+        - T3
+        - T4
+    validations:
+      required: true
+
+  - type: textarea
+    id: approval_basis
+    attributes:
+      label: Approval Basis
+      description: 사용 근거와 예산 영향
+    validations:
+      required: true
