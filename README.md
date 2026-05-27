@@ -36,6 +36,51 @@ python3 -m http.server 8080
 - Build/Deploy 증적: .github/workflows/ci.yml
 - Govern/Models 증적: docs/governance-policy.md, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
 
+## SDLC 8단계 시연 가이드
+시작 전 준비:
+- GitHub Actions에서 .github/workflows/seed-sdlc-demo.yml 실행
+- Issues에서 label:sdlc-demo 검색
+
+1. Plan
+- 위치: Issues
+- 확인: .github/ISSUE_TEMPLATE/plan-change.yml
+- 시연 포인트: Given/When/Then, AC, rollback 항목이 채워진 계획 이슈
+
+2. Code
+- 위치: Files / Commits
+- 확인: src/domain/incidents/, src/application/use-cases/, src/infrastructure/repositories/
+- 시연 포인트: DDD 레이어 분리(도메인 규칙, 유스케이스, 저장소 구현)
+
+3. Review & Test
+- 위치: Pull Requests
+- 확인: .github/pull_request_template.md, .github/CODEOWNERS
+- 시연 포인트: 리뷰 체크리스트, owner review, required checks 상태
+
+4. Build & Deploy
+- 위치: Actions
+- 확인: .github/workflows/ci.yml
+- 시연 포인트: html-validate, links-check, smoke-test 결과와 로그
+
+5. Operate
+- 위치: Issues
+- 확인: .github/ISSUE_TEMPLATE/incident-report.yml
+- 시연 포인트: incident_start/end, T+0/T+5/T+10 타임라인, 후속 조치
+
+6. Modernize
+- 위치: Issues / Pull Requests
+- 확인: .github/ISSUE_TEMPLATE/modernize-slice.yml
+- 시연 포인트: PR slice 계획과 rollback 조건
+
+7. Govern
+- 위치: Issues / Repository Files
+- 확인: .github/ISSUE_TEMPLATE/governance-check.yml, docs/governance-policy.md
+- 시연 포인트: 예외 승인 기준, 승인자, 만료 조건
+
+8. Models
+- 위치: Issues / Actions / Repository Files
+- 확인: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
+- 시연 포인트: 작업 등급별 모델 정책, SLO breach 자동 이슈 흐름
+
 ## DDD 코드 구조
 - 아키텍처 문서: docs/ddd-architecture.md
 - Domain: src/domain/incidents/
