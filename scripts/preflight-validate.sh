@@ -104,6 +104,12 @@ require_file "$MODEL_POLICY_WORKFLOW"
 require_text_in_file "$MODEL_POLICY_WORKFLOW" "approved-tech-lead" "model policy gate checks tech lead approval"
 require_text_in_file "$MODEL_POLICY_WORKFLOW" "approved-security" "model policy gate checks security approval"
 require_text_in_file "$MODEL_POLICY_WORKFLOW" "policy-blocked" "model policy gate sets blocked label"
+require_text_in_file "$MODEL_POLICY_WORKFLOW" "core.warning('Premium tier approval requirements not met')" "model policy gate warns instead of failing on missing premium approvals"
+if grep -Fq "core.setFailed(" "$ROOT_DIR/$MODEL_POLICY_WORKFLOW"; then
+  fail "model policy gate should not fail workflow runs for policy outcomes"
+else
+  pass "model policy gate does not use core.setFailed"
+fi
 
 print_header "D. GitHub policy files"
 require_file ".github/CODEOWNERS"

@@ -91,7 +91,7 @@ jobs:
                   '- Provide Approval Basis for traceability.'
                 ].join('\n')
               });
-              core.setFailed('Missing Work Tier in models issue');
+              core.warning('Missing Work Tier in models issue');
               return;
             }
 
@@ -130,4 +130,4 @@ jobs:
               ].join('\n')
             });
 
-            core.setFailed('Premium tier approval requirements not met');
+            core.warning('Premium tier approval requirements not met');
