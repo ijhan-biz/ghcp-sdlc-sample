@@ -1,0 +1,42 @@
+name: FieldOps Plan Change
+about: 장애 대응 기능 변경 계획을 등록합니다.
+title: "[PLAN] "
+labels: ["plan", "fieldops"]
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 배경
+      description: 어떤 장애/운영 요구 때문에 변경이 필요한가요?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 수용 기준 (AC)
+      description: 완료로 인정할 기준을 항목으로 작성하세요.
+      placeholder: |
+        - [ ] AC1
+        - [ ] AC2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 영향도
+      options:
+        - P1
+        - P2
+        - P3
+    validations:
+      required: true
+
+  - type: textarea
+    id: rollback
+    attributes:
+      label: 롤백 조건
+      description: 실패 시 되돌림 기준
+    validations:
+      required: true

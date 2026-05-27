@@ -1,0 +1,48 @@
+name: FieldOps Incident Report
+about: 장애 대응 이슈를 생성합니다.
+title: "[INCIDENT] "
+labels: ["incident", "fieldops"]
+body:
+  - type: input
+    id: started_at
+    attributes:
+      label: incident_start (UTC)
+      placeholder: "2026-05-27T08:30:00Z"
+    validations:
+      required: true
+
+  - type: input
+    id: ended_at
+    attributes:
+      label: incident_end (UTC)
+      placeholder: "2026-05-27T08:44:00Z"
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: 영향 범위
+      description: 서비스/사용자 영향 요약
+    validations:
+      required: true
+
+  - type: textarea
+    id: timeline
+    attributes:
+      label: 타임라인
+      description: T+0, T+5, T+10 단위로 작성
+      placeholder: |
+        - T+0: 탐지
+        - T+5: 완화
+        - T+10: 정상화
+    validations:
+      required: true
+
+  - type: textarea
+    id: action_items
+    attributes:
+      label: 후속 조치
+      description: 재발 방지 조치
+    validations:
+      required: true
