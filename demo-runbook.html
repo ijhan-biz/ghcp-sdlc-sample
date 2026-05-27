@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FieldOps Live Demo Runbook</title>
+  <style>
+    :root {
+      --bg: #f2f6fb;
+      --paper: #ffffff;
+      --ink: #172635;
+      --soft: #4a6177;
+      --line: #d6e0ea;
+      --brand: #1f5a8a;
+      --brand-2: #0e3a5d;
+      --ok: #0f766e;
+      --warn: #b45309;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 20% 0%, #ffffff 0%, var(--bg) 60%);
+      color: var(--ink);
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 1.2rem auto 2rem;
+    }
+
+    .hero {
+      background: linear-gradient(140deg, #f8fbff, #edf4fb);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.2rem;
+    }
+
+    h1 {
+      margin: 0.2rem 0 0.6rem;
+      font-size: clamp(1.55rem, 3.2vw, 2.4rem);
+      line-height: 1.2;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0.4rem 0;
+      color: var(--soft);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.9rem;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.22rem 0.62rem;
+      font-size: 0.84rem;
+      background: #fff;
+      color: #153750;
+    }
+
+    .grid {
+      margin-top: 0.9rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.7rem;
+    }
+
+    a.cta {
+      display: block;
+      text-decoration: none;
+      color: #fff;
+      background: var(--brand);
+      border: 1px solid var(--brand);
+      border-radius: 10px;
+      padding: 0.58rem 0.72rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    a.cta.alt {
+      color: var(--brand-2);
+      background: #fff;
+      border-color: #b8cade;
+    }
+
+    .steps {
+      margin: 0.7rem 0 0;
+      padding-left: 1.1rem;
+    }
+
+    .steps li {
+      margin: 0.45rem 0;
+      color: var(--ink);
+    }
+
+    .script {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      background: #f3f8fd;
+      border: 1px solid #d7e5f3;
+      color: #13344f;
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      padding: 0.15rem 0.45rem;
+      border: 1px solid var(--line);
+      margin-right: 0.35rem;
+      background: #fff;
+    }
+
+    .ok {
+      color: var(--ok);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .wrap {
+        width: calc(100% - 1rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <p>FieldOps Incident Portal · Live Demo</p>
+      <h1>데모 실행 방법 + 발표 스크립트</h1>
+      <p>발표자가 화면을 클릭하며 바로 읽을 수 있도록, 10분/15분/25분 시나리오를 한 페이지로 정리했습니다.</p>
+      <div class="chips">
+        <span class="chip">GitHub-native SDLC</span>
+        <span class="chip">GHAS 5-layer</span>
+        <span class="chip">DDD + BDD</span>
+        <span class="chip">Go / No-Go</span>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:0.8rem;">
+      <h2>0) 데모 시작 링크</h2>
+      <p>아래 링크를 순서대로 열어두면 발표 중 전환이 빠릅니다.</p>
+      <div class="links">
+        <a class="cta" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/actions/workflows/seed-sdlc-demo.yml">Seed SDLC Workflow</a>
+        <a class="cta alt" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/issues?q=is%3Aissue+label%3Asdlc-stage">SDLC Issues</a>
+        <a class="cta alt" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/pulls?q=is%3Apr+is%3Aopen+label%3Asdlc-demo">Demo PR List</a>
+        <a class="cta alt" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/actions/workflows/dependency-review.yml">Dependency Review Workflow</a>
+        <a class="cta alt" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/actions/runs/26540841628">Dependency Review Example Run</a>
+        <a class="cta alt" target="_blank" rel="noopener noreferrer" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/security">Security Overview</a>
+      </div>
+      <p><span class="ok">완료 기준:</span> 탭 6개를 미리 열고 발표 순서대로 좌우 이동만 하면 됩니다.</p>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>1) 10분 스크립트 (핵심)</h2>
+        <ol class="steps">
+          <li><span class="badge">Actions</span> seed 실행 결과를 열고 8단계 이슈가 자동 생성됨을 보여준다.
+            <div class="script">"개발 작업은 채팅이 아니라 GitHub 증거로 남깁니다. SDLC 8단계가 이슈로 기록됩니다."</div>
+          </li>
+          <li><span class="badge">Issues</span> `label:sdlc-stage` 목록에서 Plan과 Govern 이슈를 1개씩 연다.
+            <div class="script">"AI에 맡기기 전, 리더 질문과 멈춤 기준을 먼저 합의합니다."</div>
+          </li>
+          <li><span class="badge">PR</span> 데모 PR 목록에서 open PR 하나를 열어 required checks를 보여준다.
+            <div class="script">"AI PR은 완성이 아니라 리뷰 요청입니다. 승인 경계는 사람과 체크입니다."</div>
+          </li>
+          <li><span class="badge">GHAS</span> Dependency Review workflow와 example run을 연다.
+            <div class="script">"실패 로그는 우회 대상이 아니라 다음 입력입니다. 이 화면이 보안 게이트 증거입니다."</div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>2) 15분 스크립트 (권장)</h2>
+        <ol class="steps">
+          <li>10분 스크립트 전체를 실행한다.</li>
+          <li>Security 탭에서 Overview를 열고 `SECURITY.md` 정책 링크로 이동한다.
+            <div class="script">"AI 변경이 늘수록 보안은 더 앞단으로 와야 합니다. 정책과 실행 화면을 같이 보여드립니다."</div>
+          </li>
+          <li>GHAS 5-layer 문서(`docs/ghas-setup.md`)를 열어 5중 방어선을 설명한다.
+            <div class="script">"Code review, CodeQL, Secret scanning, Enterprise controls, Agent governance를 한 운영 체계로 묶습니다."</div>
+          </li>
+          <li>마지막에 `docs/preflight-checklist.md`로 Go/No-Go 기준을 보여준다.
+            <div class="script">"오늘 데모는 이벤트가 아니라 파일럿 승인 회의의 입력입니다."</div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>3) 25분 스크립트 (심화)</h2>
+        <ol class="steps">
+          <li>15분 스크립트를 완료한다.</li>
+          <li>DDD 코드(`src/domain`, `src/application`, `src/infrastructure`)를 열어 경계 분리를 설명한다.</li>
+          <li>tool exception 템플릿과 Govern 이슈를 연결해 예외 승인 체계를 시연한다.</li>
+          <li>slo-monitor 이슈와 cost-governance 문서를 열어 운영/비용 루프를 설명한다.
+            <div class="script">"비용은 금지가 아니라 라우팅과 승인으로 통제합니다."</div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h2>4) 장애 대비 Fallback</h2>
+        <ul class="steps">
+          <li><span class="warn">Actions 지연</span>: `docs/sdlc-stage-evidence-map.md` 먼저 제시</li>
+          <li><span class="warn">Security 권한 부족</span>: `SECURITY.md` + `docs/ghas-setup.md`로 대체</li>
+          <li><span class="warn">PR 없음</span>: `pull_request_template.md`와 `CODEOWNERS` 파일 직접 오픈</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
