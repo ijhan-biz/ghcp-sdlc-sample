@@ -24,6 +24,15 @@
 - 필수 근거: 작업 복잡도, 예상 이득, 대체 가능성
 - 필수 기록: 요청자, 기간, 비용 상한, 종료 조건
 
+## 자동 적용 방식 (Policy Gate)
+- `.github/workflows/model-routing-policy-gate.yml`가 `models` 라벨 이슈를 자동 점검한다.
+- T3/T4 요청은 아래 3가지가 모두 있어야 통과한다.
+	- `approved-tech-lead` 라벨
+	- `approved-security` 라벨
+	- `Approval Basis` 본문 근거(최소 길이)
+- 요건 미충족 시 `policy-blocked` 라벨이 붙고, 충족 시 `policy-approved` 라벨로 전환된다.
+- 차단/통과 결과는 이슈 코멘트로 자동 기록되어 감사 증거로 남는다.
+
 ## Budget Alert 운영
 - 70%: 팀 리더 알림, 상위 작업 재분류
 - 90%: 승인 없는 premium 사용 중단

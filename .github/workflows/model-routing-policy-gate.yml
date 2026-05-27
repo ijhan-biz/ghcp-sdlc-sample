@@ -1,0 +1,133 @@
+name: model-routing-policy-gate
+
+on:
+  issues:
+    types: [opened, edited, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  enforce-model-routing:
+    if: contains(github.event.issue.labels.*.name, 'models')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce tier-based premium approval gate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const issue = context.payload.issue;
+
+            const labels = (issue.labels || []).map((l) => l.name);
+            const body = issue.body || '';
+
+            function parseTier(text) {
+              const m = text.match(/###\s*Work Tier\s*\n+\s*(T[0-4])/i);
+              if (m) return m[1].toUpperCase();
+
+              const fallback = text.match(/\b(T[0-4])\b/i);
+              return fallback ? fallback[1].toUpperCase() : null;
+            }
+
+            function parseApprovalBasis(text) {
+              const m = text.match(/###\s*Approval Basis\s*\n+([\s\S]*?)(?=\n###\s|$)/i);
+              if (!m) return '';
+              return m[1].trim();
+            }
+
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, name, color, description });
+                } else {
+                  throw e;
+                }
+              }
+            }
+
+            async function addLabels(issue_number, names) {
+              if (names.length === 0) return;
+              await github.rest.issues.addLabels({ owner, repo, issue_number, labels: names });
+            }
+
+            async function removeLabel(issue_number, name) {
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number, name });
+              } catch (e) {
+                if (e.status !== 404) throw e;
+              }
+            }
+
+            const tier = parseTier(body);
+            const approvalBasis = parseApprovalBasis(body);
+            const isPremiumTier = tier === 'T3' || tier === 'T4';
+            const hasTechLeadApproval = labels.includes('approved-tech-lead');
+            const hasSecurityApproval = labels.includes('approved-security');
+            const hasApprovalBasis = approvalBasis.replace(/\s+/g, ' ').length >= 20;
+            const isCompliant = !isPremiumTier || (hasTechLeadApproval && hasSecurityApproval && hasApprovalBasis);
+
+            await ensureLabel('policy-blocked', 'b60205', 'Policy gate failed: approval missing');
+            await ensureLabel('policy-approved', '0e8a16', 'Policy gate passed');
+            await ensureLabel('approved-tech-lead', '1d76db', 'Approved by tech lead');
+            await ensureLabel('approved-security', '8250df', 'Approved by security');
+
+            if (!tier) {
+              await addLabels(issue.number, ['policy-blocked']);
+              await removeLabel(issue.number, 'policy-approved');
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: [
+                  'Model routing policy gate: unable to detect Work Tier.',
+                  '',
+                  'Required action:',
+                  '- Set Work Tier to T0~T4 using the model-routing issue template.',
+                  '- Provide Approval Basis for traceability.'
+                ].join('\n')
+              });
+              core.setFailed('Missing Work Tier in models issue');
+              return;
+            }
+
+            if (isCompliant) {
+              await removeLabel(issue.number, 'policy-blocked');
+              await addLabels(issue.number, ['policy-approved']);
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: [
+                  `Model routing policy gate passed for ${tier}.`,
+                  isPremiumTier
+                    ? '- Premium tier request has required approvals and approval basis.'
+                    : '- Non-premium tier does not require premium approval labels.'
+                ].join('\n')
+              });
+              return;
+            }
+
+            await removeLabel(issue.number, 'policy-approved');
+            await addLabels(issue.number, ['policy-blocked']);
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issue.number,
+              body: [
+                `Model routing policy gate blocked for ${tier}.`,
+                '',
+                'Required before premium usage:',
+                `- approved-tech-lead label: ${hasTechLeadApproval ? 'present' : 'missing'}`,
+                `- approved-security label: ${hasSecurityApproval ? 'present' : 'missing'}`,
+                `- Approval Basis section (>= 20 chars): ${hasApprovalBasis ? 'present' : 'missing'}`,
+                '',
+                'Stop condition: premium usage remains blocked until all requirements are met.'
+              ].join('\n')
+            });
+
+            core.setFailed('Premium tier approval requirements not met');

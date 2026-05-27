@@ -98,6 +98,13 @@ DEPENDENCY_REVIEW_WORKFLOW=".github/workflows/dependency-review.yml"
 require_file "$DEPENDENCY_REVIEW_WORKFLOW"
 require_regex_in_file "$DEPENDENCY_REVIEW_WORKFLOW" 'dependency-review-action' 'dependency-review workflow uses action'
 
+print_header "C-2. Model routing policy gate"
+MODEL_POLICY_WORKFLOW=".github/workflows/model-routing-policy-gate.yml"
+require_file "$MODEL_POLICY_WORKFLOW"
+require_text_in_file "$MODEL_POLICY_WORKFLOW" "approved-tech-lead" "model policy gate checks tech lead approval"
+require_text_in_file "$MODEL_POLICY_WORKFLOW" "approved-security" "model policy gate checks security approval"
+require_text_in_file "$MODEL_POLICY_WORKFLOW" "policy-blocked" "model policy gate sets blocked label"
+
 print_header "D. GitHub policy files"
 require_file ".github/CODEOWNERS"
 require_file ".github/pull_request_template.md"
