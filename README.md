@@ -18,6 +18,14 @@ python3 -m http.server 8080
 - ci / links-check
 - ci / smoke-test
 - codeql / analyze
+- dependency-review / dependency-review
+
+## GHAS 설정
+- 설정 가이드: docs/ghas-setup.md
+- CodeQL 워크플로: .github/workflows/codeql.yml
+- CodeQL 구성: .github/codeql/codeql-config.yml
+- Dependency Review 워크플로: .github/workflows/dependency-review.yml
+- Secret scanning / Push protection: Repository Settings > Security & analysis에서 활성화
 
 ## GitHub 직접 시연 케이스
 - 케이스 문서: docs/github-sdlc-cases.md

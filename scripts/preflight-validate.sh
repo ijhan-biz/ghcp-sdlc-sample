@@ -84,6 +84,13 @@ print_header "C. CodeQL workflow"
 CODEQL_WORKFLOW=".github/workflows/codeql.yml"
 require_file "$CODEQL_WORKFLOW"
 require_regex_in_file "$CODEQL_WORKFLOW" '(^|[[:space:]])analyze:' 'codeql.yml has job name: analyze'
+require_regex_in_file "$CODEQL_WORKFLOW" 'config-file:' 'codeql.yml has config-file setting'
+require_file ".github/codeql/codeql-config.yml"
+
+print_header "C-1. GHAS dependency review"
+DEPENDENCY_REVIEW_WORKFLOW=".github/workflows/dependency-review.yml"
+require_file "$DEPENDENCY_REVIEW_WORKFLOW"
+require_regex_in_file "$DEPENDENCY_REVIEW_WORKFLOW" 'dependency-review-action' 'dependency-review workflow uses action'
 
 print_header "D. GitHub policy files"
 require_file ".github/CODEOWNERS"
@@ -102,6 +109,7 @@ require_file "docs/kpi-metrics.md"
 require_file "docs/github-sdlc-cases.md"
 require_file "docs/ddd-architecture.md"
 require_file "docs/sdlc-stage-evidence-map.md"
+require_file "docs/ghas-setup.md"
 
 print_header "E-1. DDD code pack"
 require_file "src/domain/incidents/Incident.js"
