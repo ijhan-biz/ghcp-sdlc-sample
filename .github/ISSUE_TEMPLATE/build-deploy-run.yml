@@ -1,0 +1,24 @@
+name: FieldOps Build & Deploy Run
+about: Build & Deploy 단계 실행 이슈를 등록합니다.
+title: "[BUILD-DEPLOY] "
+labels: ["build-deploy", "fieldops", "sdlc-demo"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: 배포 파이프라인 실행
+        Given main 브랜치에 배포 대상 변경이 반영되어 있고
+        When CI가 실행되면
+        Then smoke test가 통과한 경우에만 배포 가능 상태여야 한다
+    validations:
+      required: true
+
+  - type: textarea
+    id: action_run
+    attributes:
+      label: Action Run Evidence
+      description: Actions 실행 링크를 첨부하세요.
+    validations:
+      required: true

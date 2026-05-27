@@ -2,6 +2,11 @@
 
 이 문서는 SDLC 각 단계를 GitHub에서 어디서 보여줄지 정의합니다.
 
+## 자동 생성 워크플로
+- GitHub 위치: Actions
+- 증적: .github/workflows/seed-sdlc-demo.yml
+- 시연: SDLC 8단계 데모 이슈 자동 생성
+
 ## 1. Plan
 - GitHub 위치: Issues
 - 증적: .github/ISSUE_TEMPLATE/plan-change.yml
@@ -9,17 +14,17 @@
 
 ## 2. Code
 - GitHub 위치: Files / Commits
-- 증적: src/domain, src/application, src/infrastructure
+- 증적: .github/ISSUE_TEMPLATE/code-change.yml, src/domain, src/application, src/infrastructure
 - 시연: DDD 레이어 분리 코드 리뷰
 
 ## 3. Review & Test
-- GitHub 위치: Pull Requests
-- 증적: .github/pull_request_template.md, .github/CODEOWNERS
+- GitHub 위치: Issues / Pull Requests
+- 증적: .github/ISSUE_TEMPLATE/review-test-check.yml, .github/pull_request_template.md, .github/CODEOWNERS
 - 시연: PR 체크리스트 + owner review
 
 ## 4. Build & Deploy
-- GitHub 위치: Actions
-- 증적: .github/workflows/ci.yml
+- GitHub 위치: Issues / Actions
+- 증적: .github/ISSUE_TEMPLATE/build-deploy-run.yml, .github/workflows/ci.yml
 - 시연: html-validate, links-check, smoke-test 상태 확인
 
 ## 5. Operate
@@ -33,8 +38,8 @@
 - 시연: PR slice 계획과 rollback 조건 확인
 
 ## 7. Govern
-- GitHub 위치: Repository files
-- 증적: docs/governance-policy.md, docs/exception-approval-template.md
+- GitHub 위치: Issues / Repository files
+- 증적: .github/ISSUE_TEMPLATE/governance-check.yml, docs/governance-policy.md, docs/exception-approval-template.md
 - 시연: 예외 승인 기준 설명
 
 ## 8. Models

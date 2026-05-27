@@ -1,0 +1,36 @@
+name: FieldOps Code Change
+about: Code 단계의 DDD 변경 이슈를 등록합니다.
+title: "[CODE] "
+labels: ["code", "fieldops", "sdlc-demo"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: 장애 우선순위 계산 정책 반영
+        Given P2 장애가 접수되고 영향 가입자가 20,000명 이상일 때
+        When 운영자가 장애를 등록하면
+        Then 우선순위는 HIGH 이상으로 계산되어야 한다
+    validations:
+      required: true
+
+  - type: textarea
+    id: ddd_scope
+    attributes:
+      label: DDD Scope
+      description: 변경 대상 레이어를 명시하세요.
+      placeholder: |
+        - [ ] Domain
+        - [ ] Application
+        - [ ] Infrastructure
+    validations:
+      required: true
+
+  - type: textarea
+    id: test_evidence
+    attributes:
+      label: Test Evidence Plan
+      description: 어떤 테스트로 시나리오를 검증할지 작성하세요.
+    validations:
+      required: true

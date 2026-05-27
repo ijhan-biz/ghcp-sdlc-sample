@@ -31,6 +31,7 @@ python3 -m http.server 8080
 - 케이스 문서: docs/github-sdlc-cases.md
 - Stage 증적 맵: docs/sdlc-stage-evidence-map.md
 - Plan/Operate/Modernize/Models 템플릿: .github/ISSUE_TEMPLATE/
+- 자동 이슈 생성: .github/workflows/seed-sdlc-demo.yml (Actions에서 실행)
 - Review/Test 증적: .github/CODEOWNERS, .github/pull_request_template.md
 - Build/Deploy 증적: .github/workflows/ci.yml
 - Govern/Models 증적: docs/governance-policy.md, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml

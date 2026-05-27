@@ -1,0 +1,26 @@
+name: FieldOps Governance Check
+about: Govern 단계 정책/승인 점검 이슈를 등록합니다.
+title: "[GOVERN] "
+labels: ["govern", "fieldops", "sdlc-demo"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: 예외 승인 이력 검증
+        Given 비표준 도구 사용 요청이 등록되었고
+        When Tech Lead와 Security가 승인 여부를 검토하면
+        Then 승인 근거와 만료일이 기록되어야 한다
+    validations:
+      required: true
+
+  - type: textarea
+    id: policy_refs
+    attributes:
+      label: Policy References
+      placeholder: |
+        - docs/governance-policy.md
+        - docs/exception-approval-template.md
+    validations:
+      required: true

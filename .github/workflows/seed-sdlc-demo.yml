@@ -1,0 +1,164 @@
+name: seed-sdlc-demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      close_existing:
+        description: "Close existing open SDLC demo issues first"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Seed SDLC 8 demo issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const closeExisting = '${{ inputs.close_existing }}' === 'true';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = 'sdlc-demo';
+
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch (e) {
+                if (e.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, name, color, description });
+                } else {
+                  throw e;
+                }
+              }
+            }
+
+            await ensureLabel('sdlc-demo', '0e8a16', 'SDLC 8-stage demo artifact');
+            await ensureLabel('plan', '5319e7', 'Plan stage');
+            await ensureLabel('code', '1d76db', 'Code stage');
+            await ensureLabel('review-test', 'fbca04', 'Review & Test stage');
+            await ensureLabel('build-deploy', '0e8a16', 'Build & Deploy stage');
+            await ensureLabel('incident', 'd93f0b', 'Operate stage');
+            await ensureLabel('modernize', '006b75', 'Modernize stage');
+            await ensureLabel('govern', 'b60205', 'Govern stage');
+            await ensureLabel('models', '8250df', 'Models stage');
+
+            if (closeExisting) {
+              const open = await github.paginate(github.rest.issues.listForRepo, {
+                owner,
+                repo,
+                state: 'open',
+                labels: label,
+                per_page: 100
+              });
+
+              for (const issue of open) {
+                await github.rest.issues.update({
+                  owner,
+                  repo,
+                  issue_number: issue.number,
+                  state: 'closed'
+                });
+              }
+            }
+
+            const stages = [
+              {
+                title: '[PLAN] BDD 계획 시나리오 점검',
+                labels: ['sdlc-demo', 'plan', 'fieldops'],
+                body: [
+                  'Scenario: 장애 우선순위 정책 계획',
+                  'Given 야간 시간대에 P2 장애 요청이 접수되고',
+                  'When 운영자가 계획 이슈를 작성하면',
+                  'Then 수용기준(AC)과 롤백 조건이 반드시 포함되어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[CODE] DDD 레이어 변경 증적',
+                labels: ['sdlc-demo', 'code', 'fieldops'],
+                body: [
+                  'Scenario: DDD 기반 코드 변경',
+                  'Given Domain/Application/Infrastructure가 분리되어 있고',
+                  'When 장애 등록 유스케이스를 수정하면',
+                  'Then 도메인 정책 변경과 애플리케이션 조합이 분리되어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[REVIEW-TEST] Required checks 검증',
+                labels: ['sdlc-demo', 'review-test', 'fieldops'],
+                body: [
+                  'Scenario: 머지 전 리뷰 게이트',
+                  'Given PR이 생성되고 CODEOWNERS가 설정되어 있을 때',
+                  'When 필수 체크가 통과하면',
+                  'Then 리뷰 승인 후에만 머지할 수 있어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[BUILD-DEPLOY] Actions 실행 검증',
+                labels: ['sdlc-demo', 'build-deploy', 'fieldops'],
+                body: [
+                  'Scenario: CI 파이프라인 실행',
+                  'Given main 반영 후 CI가 실행될 때',
+                  'When smoke-test가 성공하면',
+                  'Then 배포 가능 상태가 되어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[INCIDENT] Operate 타임라인 점검',
+                labels: ['sdlc-demo', 'incident', 'fieldops'],
+                body: [
+                  'Scenario: 장애 대응 타임라인',
+                  'Given incident_start가 기록되고',
+                  'When T+0/T+5/T+10 runbook을 수행하면',
+                  'Then incident_end는 15분 내로 기록되어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[MODERNIZE] PR slice 점검',
+                labels: ['sdlc-demo', 'modernize', 'fieldops'],
+                body: [
+                  'Scenario: 점진적 현대화',
+                  'Given deprecated parser가 존재하고',
+                  'When PR을 3개 슬라이스로 분리하면',
+                  'Then 각 PR에 rollback 기준이 있어야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[GOVERN] 예외 승인 점검',
+                labels: ['sdlc-demo', 'govern', 'fieldops'],
+                body: [
+                  'Scenario: 예외 승인 이력 관리',
+                  'Given 비표준 도구 요청이 등록되고',
+                  'When Tech Lead와 Security가 검토하면',
+                  'Then 승인 근거와 만료일이 남아야 한다'
+                ].join('\n')
+              },
+              {
+                title: '[MODELS] 모델 라우팅 정책 점검',
+                labels: ['sdlc-demo', 'models', 'fieldops'],
+                body: [
+                  'Scenario: 모델 사용 승인',
+                  'Given T3 작업 요청이 들어오고',
+                  'When 승인 기준(보안/비용/근거)을 충족하면',
+                  'Then premium 모델 사용이 허용되어야 한다'
+                ].join('\n')
+              }
+            ];
+
+            for (const stage of stages) {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title: stage.title,
+                body: stage.body,
+                labels: stage.labels
+              });
+            }

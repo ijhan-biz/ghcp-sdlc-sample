@@ -4,6 +4,11 @@
 
 아래 케이스는 GitHub UI에서 바로 시연할 수 있는 동선입니다.
 
+## 빠른 준비 (GitHub에서 직접 생성)
+1. Actions 탭에서 `seed-sdlc-demo` 워크플로를 실행합니다.
+2. `close_existing=true`로 실행하면 기존 SDLC 데모 이슈를 닫고 8단계 이슈를 새로 만듭니다.
+3. Issues 탭에서 `label:sdlc-demo`로 검색하면 8단계 이슈를 바로 확인할 수 있습니다.
+
 ## 1) Plan
 - 시연 위치: Issues 탭
 - 준비물: .github/ISSUE_TEMPLATE/plan-change.yml
@@ -49,7 +54,7 @@
 - 목적: SDLC 8단계별 GitHub 시연 위치와 증적 파일을 한 번에 확인
 
 ## 데모 실행 순서 (15분)
-1. Issues에서 Plan/Incident 템플릿 생성
+1. Actions에서 seed-sdlc-demo 실행 후 Issues 확인
 2. PR 하나를 열어 review/check 상태 확인
 3. Actions에서 실패 로그 하나를 열어 수정 흐름 설명
 4. Security 탭에서 code scanning 상태 확인

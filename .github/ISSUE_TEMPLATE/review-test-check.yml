@@ -1,0 +1,29 @@
+name: FieldOps Review & Test Check
+about: Review & Test 단계 점검 이슈를 등록합니다.
+title: "[REVIEW-TEST] "
+labels: ["review-test", "fieldops", "sdlc-demo"]
+body:
+  - type: textarea
+    id: bdd_scenario
+    attributes:
+      label: BDD Scenario (Given / When / Then)
+      placeholder: |
+        Scenario: PR 머지 전 필수 게이트 확인
+        Given PR이 생성되었고 required checks가 설정되어 있을 때
+        When CODEOWNERS 리뷰 승인과 체크 통과를 확인하면
+        Then 머지 가능 상태여야 한다
+    validations:
+      required: true
+
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Review Checklist
+      placeholder: |
+        - [ ] CODEOWNERS 승인
+        - [ ] ci / html-validate
+        - [ ] ci / links-check
+        - [ ] ci / smoke-test
+        - [ ] codeql / analyze
+    validations:
+      required: true
