@@ -23,3 +23,12 @@
 - 보안 이슈 발생 시 incident 이슈 생성 후 runbook 적용
 - 예외 승인은 docs/exception-approval-template.md로 기록
 - 주간 리뷰에서 CodeQL alert, dependency review 실패 이력 점검
+
+## 5. 5중 방어선 맵
+| 방어선 | GitHub 증거 | 운영 기준 |
+| --- | --- | --- |
+| Code review | Pull Request + CODEOWNERS | owner 승인 없는 머지 금지 |
+| CodeQL / Code scanning | .github/workflows/codeql.yml | codeql / analyze green |
+| Secret scanning | Security & analysis 설정 | push protection 활성 |
+| Enterprise controls | branch protection, required checks | 우회 권한 최소화 |
+| Cloud Agent Governance | 정책 문서 + 예외 승인 이력 | 승인자/만료일/로그 제출 필수 |

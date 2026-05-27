@@ -25,6 +25,31 @@
   </header>
 
   <main class="container">
+    <section class="panel demo-entry" id="demoEntry">
+      <h2>GitHub 실전 시연 시작</h2>
+      <p>
+        이 화면을 진입점으로 사용합니다. 아래 버튼 순서대로 클릭하면 SDLC 8단계 증적을 GitHub에서 직접 시연할 수 있습니다.
+      </p>
+      <div class="entry-actions">
+        <a class="entry-btn primary" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/actions/workflows/seed-sdlc-demo.yml" target="_blank" rel="noopener noreferrer">
+          1) Seed 실행 화면 열기
+        </a>
+        <a class="entry-btn" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/issues?q=is%3Aissue+label%3Asdlc-stage" target="_blank" rel="noopener noreferrer">
+          2) SDLC 8단계 Issues 확인
+        </a>
+        <a class="entry-btn" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/pulls" target="_blank" rel="noopener noreferrer">
+          3) PR Review 증적 보기
+        </a>
+        <a class="entry-btn" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/actions" target="_blank" rel="noopener noreferrer">
+          4) Actions 실행 로그 보기
+        </a>
+        <a class="entry-btn" href="https://github.com/ijhan-biz/ghcp-sdlc-sample/security" target="_blank" rel="noopener noreferrer">
+          5) GHAS 보안 탭 보기
+        </a>
+      </div>
+      <p class="pages-url">운영 클릭패스 문서: docs/seminar-demo-clickpath.md</p>
+    </section>
+
     <section class="panel intro">
       <h2>도메인 가정</h2>
       <p>
@@ -36,7 +61,7 @@
     <section class="panel">
       <div class="section-head">
         <h2>SDLC 8 Stages</h2>
-        <p>카드를 클릭하면 해당 단계의 FieldOps 운영 케이스가 표시됩니다.</p>
+        <p>카드를 클릭하면 단계 설명과 함께 GitHub 증적 링크가 표시됩니다.</p>
       </div>
       <div class="stage-layout">
         <div id="stageGrid" class="stage-grid" aria-label="SDLC 8 stage cards"></div>

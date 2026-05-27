@@ -41,17 +41,21 @@
 
 ## 7) Govern
 - 시연 위치: Repository Files
-- 준비물: docs/exception-approval-template.md, docs/governance-policy.md
+- 준비물: .github/ISSUE_TEMPLATE/tool-exception-request.yml, docs/exception-approval-template.md, docs/governance-policy.md
 - 확인 포인트: 예외 승인 로그와 승인자(Tech Lead + Security)
 
 ## 8) Models
 - 시연 위치: Repository Files + Actions
-- 준비물: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
+- 준비물: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, docs/cost-governance.md, .github/workflows/slo-monitor.yml
 - 확인 포인트: 모델 사용률과 SLO breach 시 incident 이슈 자동 생성
 
 ## 단계별 증적 맵
 - 문서: docs/sdlc-stage-evidence-map.md
 - 목적: SDLC 8단계별 GitHub 시연 위치와 증적 파일을 한 번에 확인
+
+## 발표자 클릭패스
+- 문서: docs/seminar-demo-clickpath.md
+- 목적: 10분/15분/25분 버전 발표 동선과 fallback 제공
 
 ## 데모 실행 순서 (15분)
 1. Actions에서 seed-sdlc-demo 실행 후 Issues 확인

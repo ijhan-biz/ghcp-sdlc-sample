@@ -82,6 +82,9 @@ require_regex_in_file "$CI_WORKFLOW" '(^|[[:space:]])smoke-test:' 'ci.yml has jo
 SEED_WORKFLOW=".github/workflows/seed-sdlc-demo.yml"
 require_file "$SEED_WORKFLOW"
 require_regex_in_file "$SEED_WORKFLOW" 'workflow_dispatch' 'seed workflow is manually triggerable'
+require_text_in_file "$SEED_WORKFLOW" '## Leader question' 'seed issues include Leader question'
+require_text_in_file "$SEED_WORKFLOW" '## Stop condition' 'seed issues include Stop condition'
+require_text_in_file "$SEED_WORKFLOW" '## Evidence link' 'seed issues include Evidence link'
 
 print_header "C. CodeQL workflow"
 CODEQL_WORKFLOW=".github/workflows/codeql.yml"
@@ -107,6 +110,7 @@ require_file ".github/ISSUE_TEMPLATE/incident-report.yml"
 require_file ".github/ISSUE_TEMPLATE/modernize-slice.yml"
 require_file ".github/ISSUE_TEMPLATE/governance-check.yml"
 require_file ".github/ISSUE_TEMPLATE/model-routing-review.yml"
+require_file ".github/ISSUE_TEMPLATE/tool-exception-request.yml"
 
 print_header "E. Docs pack"
 require_file "docs/preflight-checklist.md"
@@ -117,6 +121,8 @@ require_file "docs/github-sdlc-cases.md"
 require_file "docs/ddd-architecture.md"
 require_file "docs/sdlc-stage-evidence-map.md"
 require_file "docs/ghas-setup.md"
+require_file "docs/cost-governance.md"
+require_file "docs/seminar-demo-clickpath.md"
 
 print_header "E-1. DDD code pack"
 require_file "src/domain/incidents/Incident.js"
@@ -152,6 +158,17 @@ require_text_in_file ".github/ISSUE_TEMPLATE/governance-check.yml" "Then" "gover
 require_text_in_file ".github/ISSUE_TEMPLATE/model-routing-review.yml" "Given" "models template includes Given"
 require_text_in_file ".github/ISSUE_TEMPLATE/model-routing-review.yml" "When" "models template includes When"
 require_text_in_file ".github/ISSUE_TEMPLATE/model-routing-review.yml" "Then" "models template includes Then"
+require_text_in_file ".github/ISSUE_TEMPLATE/tool-exception-request.yml" "승인자" "tool exception template includes approvers"
+
+print_header "E-3. GHAS and Cost governance checks"
+require_text_in_file "docs/ghas-setup.md" "5중 방어선" "ghas doc includes 5-layer defense section"
+require_text_in_file "docs/ghas-setup.md" "Code review" "ghas doc includes code review layer"
+require_text_in_file "docs/ghas-setup.md" "CodeQL" "ghas doc includes CodeQL layer"
+require_text_in_file "docs/ghas-setup.md" "Secret scanning" "ghas doc includes secret scanning layer"
+require_text_in_file "docs/ghas-setup.md" "Enterprise controls" "ghas doc includes enterprise controls layer"
+require_text_in_file "docs/ghas-setup.md" "Cloud Agent Governance" "ghas doc includes agent governance layer"
+require_text_in_file "docs/cost-governance.md" "T0-T4" "cost governance includes work tiers"
+require_text_in_file "docs/cost-governance.md" "budget" "cost governance includes budget control"
 
 print_header "F. Domain candidates + GitHub Pages URL"
 DOMAIN_DOC="docs/domain-candidates.md"

@@ -93,5 +93,5 @@ jobs:
               repo: context.repo.repo,
               title,
               body,
-              labels: ['incident', 'slo-breach']
+              labels: ['incident', 'slo-breach', 'cost-review']
             });

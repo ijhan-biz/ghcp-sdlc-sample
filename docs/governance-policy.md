@@ -7,6 +7,7 @@
 ## 조건부 예외
 - 예외는 목적, 기간, 비용 상한, 데이터 경계를 명시한 경우만 허용한다.
 - 예외 승인은 Tech Lead + Security가 공동 승인한다.
+- 예외 요청은 .github/ISSUE_TEMPLATE/tool-exception-request.yml 템플릿으로 등록한다.
 
 ## 금지 항목
 - 민감정보, 고객정보, 운영 원문 로그를 AI 입력으로 사용 금지

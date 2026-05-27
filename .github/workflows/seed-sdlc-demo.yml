@@ -29,6 +29,21 @@ jobs:
             const repo = context.repo.repo;
             const label = 'sdlc-demo';
 
+            function composeBody({ scenarioLines, leaderQuestion, stopCondition, evidenceLinks }) {
+              return [
+                ...scenarioLines,
+                '',
+                '## Leader question',
+                `- ${leaderQuestion}`,
+                '',
+                '## Stop condition',
+                `- ${stopCondition}`,
+                '',
+                '## Evidence link',
+                ...evidenceLinks.map((e) => `- ${e}`)
+              ].join('\n');
+            }
+
             async function ensureLabel(name, color, description) {
               try {
                 await github.rest.issues.getLabel({ owner, repo, name });
@@ -42,6 +57,8 @@ jobs:
             }
 
             await ensureLabel('sdlc-demo', '0e8a16', 'SDLC 8-stage demo artifact');
+            await ensureLabel('sdlc-stage', '0e8a16', 'SDLC stage marker for demo filtering');
+            await ensureLabel('fieldops', '1f5a8a', 'FieldOps domain demo artifact');
             await ensureLabel('plan', '5319e7', 'Plan stage');
             await ensureLabel('code', '1d76db', 'Code stage');
             await ensureLabel('review-test', 'fbca04', 'Review & Test stage');
@@ -73,83 +90,151 @@ jobs:
             const stages = [
               {
                 title: '[PLAN] BDD 계획 시나리오 점검',
-                labels: ['sdlc-demo', 'plan', 'fieldops'],
-                body: [
-                  'Scenario: 장애 우선순위 정책 계획',
-                  'Given 야간 시간대에 P2 장애 요청이 접수되고',
-                  'When 운영자가 계획 이슈를 작성하면',
-                  'Then 수용기준(AC)과 롤백 조건이 반드시 포함되어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'plan', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 장애 우선순위 정책 계획',
+                    'Given 야간 시간대에 P2 장애 요청이 접수되고',
+                    'When 운영자가 계획 이슈를 작성하면',
+                    'Then 수용기준(AC)과 롤백 조건이 반드시 포함되어야 한다'
+                  ],
+                  leaderQuestion: '요구사항이 승인 가능한 작업 단위로 분해되었는가?',
+                  stopCondition: 'AC, owner, rollback 조건이 없으면 개발 착수 금지',
+                  evidenceLinks: [
+                    '.github/ISSUE_TEMPLATE/plan-change.yml',
+                    'docs/sdlc-stage-evidence-map.md'
+                  ]
+                })
               },
               {
                 title: '[CODE] DDD 레이어 변경 증적',
-                labels: ['sdlc-demo', 'code', 'fieldops'],
-                body: [
-                  'Scenario: DDD 기반 코드 변경',
-                  'Given Domain/Application/Infrastructure가 분리되어 있고',
-                  'When 장애 등록 유스케이스를 수정하면',
-                  'Then 도메인 정책 변경과 애플리케이션 조합이 분리되어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'code', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: DDD 기반 코드 변경',
+                    'Given Domain/Application/Infrastructure가 분리되어 있고',
+                    'When 장애 등록 유스케이스를 수정하면',
+                    'Then 도메인 정책 변경과 애플리케이션 조합이 분리되어야 한다'
+                  ],
+                  leaderQuestion: '변경이 리뷰 가능한 크기이며 DDD 경계를 지키는가?',
+                  stopCondition: '대형 변경을 단일 PR로 올리면 분할 후 재검토',
+                  evidenceLinks: [
+                    'src/domain/incidents/Incident.js',
+                    'src/application/use-cases/RegisterIncidentUseCase.js',
+                    'scripts/ddd-smoke.js'
+                  ]
+                })
               },
               {
                 title: '[REVIEW-TEST] Required checks 검증',
-                labels: ['sdlc-demo', 'review-test', 'fieldops'],
-                body: [
-                  'Scenario: 머지 전 리뷰 게이트',
-                  'Given PR이 생성되고 CODEOWNERS가 설정되어 있을 때',
-                  'When 필수 체크가 통과하면',
-                  'Then 리뷰 승인 후에만 머지할 수 있어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'review-test', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 머지 전 리뷰 게이트',
+                    'Given PR이 생성되고 CODEOWNERS가 설정되어 있을 때',
+                    'When 필수 체크가 통과하면',
+                    'Then 리뷰 승인 후에만 머지할 수 있어야 한다'
+                  ],
+                  leaderQuestion: '사람 리뷰어가 볼 증거가 충분한가?',
+                  stopCondition: 'CODEOWNERS 승인 또는 required checks 누락 시 머지 금지',
+                  evidenceLinks: [
+                    '.github/pull_request_template.md',
+                    '.github/CODEOWNERS',
+                    '.github/workflows/ci.yml'
+                  ]
+                })
               },
               {
                 title: '[BUILD-DEPLOY] Actions 실행 검증',
-                labels: ['sdlc-demo', 'build-deploy', 'fieldops'],
-                body: [
-                  'Scenario: CI 파이프라인 실행',
-                  'Given main 반영 후 CI가 실행될 때',
-                  'When smoke-test가 성공하면',
-                  'Then 배포 가능 상태가 되어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'build-deploy', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: CI 파이프라인 실행',
+                    'Given main 반영 후 CI가 실행될 때',
+                    'When smoke-test가 성공하면',
+                    'Then 배포 가능 상태가 되어야 한다'
+                  ],
+                  leaderQuestion: '배포 실패 시 되돌릴 경로가 준비되어 있는가?',
+                  stopCondition: 'smoke-test 실패 또는 rollback owner 누락 시 배포 중단',
+                  evidenceLinks: [
+                    '.github/workflows/ci.yml',
+                    'docs/runbook-demo.md'
+                  ]
+                })
               },
               {
                 title: '[INCIDENT] Operate 타임라인 점검',
-                labels: ['sdlc-demo', 'incident', 'fieldops'],
-                body: [
-                  'Scenario: 장애 대응 타임라인',
-                  'Given incident_start가 기록되고',
-                  'When T+0/T+5/T+10 runbook을 수행하면',
-                  'Then incident_end는 15분 내로 기록되어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'incident', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 장애 대응 타임라인',
+                    'Given incident_start가 기록되고',
+                    'When T+0/T+5/T+10 runbook을 수행하면',
+                    'Then incident_end는 15분 내로 기록되어야 한다'
+                  ],
+                  leaderQuestion: '운영 데이터가 안전한 형태로 처리되었는가?',
+                  stopCondition: '민감정보 또는 운영 로그 원문 포함 시 즉시 중단',
+                  evidenceLinks: [
+                    '.github/ISSUE_TEMPLATE/incident-report.yml',
+                    'docs/runbook-demo.md'
+                  ]
+                })
               },
               {
                 title: '[MODERNIZE] PR slice 점검',
-                labels: ['sdlc-demo', 'modernize', 'fieldops'],
-                body: [
-                  'Scenario: 점진적 현대화',
-                  'Given deprecated parser가 존재하고',
-                  'When PR을 3개 슬라이스로 분리하면',
-                  'Then 각 PR에 rollback 기준이 있어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'modernize', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 점진적 현대화',
+                    'Given deprecated parser가 존재하고',
+                    'When PR을 3개 슬라이스로 분리하면',
+                    'Then 각 PR에 rollback 기준이 있어야 한다'
+                  ],
+                  leaderQuestion: '중단해도 복구 가능한 PR 경계로 분할되었는가?',
+                  stopCondition: 'rollback 조건 없는 PR은 머지 금지',
+                  evidenceLinks: [
+                    '.github/ISSUE_TEMPLATE/modernize-slice.yml',
+                    'docs/sdlc-stage-evidence-map.md'
+                  ]
+                })
               },
               {
                 title: '[GOVERN] 예외 승인 점검',
-                labels: ['sdlc-demo', 'govern', 'fieldops'],
-                body: [
-                  'Scenario: 예외 승인 이력 관리',
-                  'Given 비표준 도구 요청이 등록되고',
-                  'When Tech Lead와 Security가 검토하면',
-                  'Then 승인 근거와 만료일이 남아야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'govern', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 예외 승인 이력 관리',
+                    'Given 비표준 도구 요청이 등록되고',
+                    'When Tech Lead와 Security가 검토하면',
+                    'Then 승인 근거와 만료일이 남아야 한다'
+                  ],
+                  leaderQuestion: '누가 어떤 기준으로 예외를 승인했는가?',
+                  stopCondition: '승인자, 만료일, 로그 제출 계획 누락 시 반려',
+                  evidenceLinks: [
+                    '.github/ISSUE_TEMPLATE/tool-exception-request.yml',
+                    'docs/governance-policy.md',
+                    'docs/exception-approval-template.md'
+                  ]
+                })
               },
               {
                 title: '[MODELS] 모델 라우팅 정책 점검',
-                labels: ['sdlc-demo', 'models', 'fieldops'],
-                body: [
-                  'Scenario: 모델 사용 승인',
-                  'Given T3 작업 요청이 들어오고',
-                  'When 승인 기준(보안/비용/근거)을 충족하면',
-                  'Then premium 모델 사용이 허용되어야 한다'
-                ].join('\n')
+                labels: ['sdlc-demo', 'sdlc-stage', 'models', 'fieldops'],
+                body: composeBody({
+                  scenarioLines: [
+                    'Scenario: 모델 사용 승인',
+                    'Given T3 작업 요청이 들어오고',
+                    'When 승인 기준(보안/비용/근거)을 충족하면',
+                    'Then premium 모델 사용이 허용되어야 한다'
+                  ],
+                  leaderQuestion: '이 작업이 premium 모델을 쓸 만큼 중요한가?',
+                  stopCondition: '승인 없는 premium 사용 또는 budget 기준 초과 시 중단',
+                  evidenceLinks: [
+                    'docs/cost-governance.md',
+                    'docs/kpi-metrics.md',
+                    '.github/workflows/slo-monitor.yml'
+                  ]
+                })
               }
             ];
 

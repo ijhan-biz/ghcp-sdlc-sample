@@ -1,5 +1,7 @@
 # Exception Approval Template
 
+참고: GitHub Issue 기반 요청은 .github/ISSUE_TEMPLATE/tool-exception-request.yml을 사용한다.
+
 ## 요청 정보
 - 요청 팀:
 - 요청자:

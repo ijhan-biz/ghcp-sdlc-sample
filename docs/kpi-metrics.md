@@ -26,6 +26,14 @@
 - 공식: premium_requests / total_model_requests
 - 목표: <= 30% (기본)
 
+6. Forecast 오차
+- 공식: abs(actual_cost - forecast_cost) / forecast_cost
+- 목표: <= 20%
+
+7. Budget Alert 기준
+- 70%: 리더 알림 + 상위 비용 작업 재분류
+- 90%: 승인 없는 premium 사용 중지
+
 ## 에러 버짓 규칙
 - SLO 미달이 2주 연속 발생하면 기능 변경 동결
 - 동결 해제는 Tech Lead + Security 승인

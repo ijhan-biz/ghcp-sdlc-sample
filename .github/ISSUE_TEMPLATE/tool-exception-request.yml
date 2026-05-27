@@ -1,0 +1,84 @@
+name: FieldOps Tool Exception Request
+about: 비표준 도구 사용에 대한 조건부 예외 승인 요청
+title: "[EXCEPTION] "
+labels: ["exception", "govern", "fieldops"]
+body:
+  - type: input
+    id: tool_name
+    attributes:
+      label: 요청 도구
+      placeholder: "도구명/모델명"
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 사용 목적
+      description: 표준 도구로 해결되지 않는 이유 포함
+    validations:
+      required: true
+
+  - type: input
+    id: duration
+    attributes:
+      label: 사용 기간
+      placeholder: "예: 2026-06-01 ~ 2026-06-30"
+    validations:
+      required: true
+
+  - type: input
+    id: budget_cap
+    attributes:
+      label: 비용 상한
+      placeholder: "예: 300 USD"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: data_class
+    attributes:
+      label: 데이터 분류
+      options:
+        - Public
+        - Internal
+        - Confidential
+        - Restricted
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sso
+    attributes:
+      label: SSO 연동 여부
+      options:
+        - Yes
+        - No
+    validations:
+      required: true
+
+  - type: textarea
+    id: log_plan
+    attributes:
+      label: 로그 제출 계획
+      description: actor/repo/model/cost를 어떻게 제출할지 작성
+    validations:
+      required: true
+
+  - type: textarea
+    id: exit_criteria
+    attributes:
+      label: 종료 기준
+      description: 예외 종료 또는 표준 복귀 기준
+    validations:
+      required: true
+
+  - type: textarea
+    id: approvals
+    attributes:
+      label: 승인자
+      placeholder: |
+        - Tech Lead:
+        - Security:
+    validations:
+      required: true

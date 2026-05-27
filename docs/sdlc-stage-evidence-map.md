@@ -20,7 +20,7 @@
 ## 3. Review & Test
 - GitHub 위치: Issues / Pull Requests
 - 증적: .github/ISSUE_TEMPLATE/review-test-check.yml, .github/pull_request_template.md, .github/CODEOWNERS
-- 시연: PR 체크리스트 + owner review
+- 시연: PR 체크리스트 + owner review + GHAS CodeQL 결과
 
 ## 4. Build & Deploy
 - GitHub 위치: Issues / Actions
@@ -39,10 +39,10 @@
 
 ## 7. Govern
 - GitHub 위치: Issues / Repository files
-- 증적: .github/ISSUE_TEMPLATE/governance-check.yml, docs/governance-policy.md, docs/exception-approval-template.md
+- 증적: .github/ISSUE_TEMPLATE/governance-check.yml, .github/ISSUE_TEMPLATE/tool-exception-request.yml, docs/governance-policy.md, docs/exception-approval-template.md
 - 시연: 예외 승인 기준 설명
 
 ## 8. Models
 - GitHub 위치: Issues / Actions / Repository files
-- 증적: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, .github/workflows/slo-monitor.yml
-- 시연: 모델 사용 승인과 SLO breach 자동 이슈 생성 흐름 설명
+- 증적: .github/ISSUE_TEMPLATE/model-routing-review.yml, docs/kpi-metrics.md, docs/cost-governance.md, .github/workflows/slo-monitor.yml
+- 시연: 모델 사용 승인, budget alert, SLO breach 자동 이슈 생성 흐름 설명
