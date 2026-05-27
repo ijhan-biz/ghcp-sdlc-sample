@@ -1,5 +1,5 @@
 name: FieldOps Governance Check
-about: Govern 단계 정책/승인 점검 이슈를 등록합니다.
+description: Govern 단계 정책/승인 점검 이슈를 등록합니다.
 title: "[GOVERN] "
 labels: ["govern", "fieldops", "sdlc-demo"]
 body:

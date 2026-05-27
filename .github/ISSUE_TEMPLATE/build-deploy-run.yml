@@ -1,5 +1,5 @@
 name: FieldOps Build & Deploy Run
-about: Build & Deploy 단계 실행 이슈를 등록합니다.
+description: Build & Deploy 단계 실행 이슈를 등록합니다.
 title: "[BUILD-DEPLOY] "
 labels: ["build-deploy", "fieldops", "sdlc-demo"]
 body:

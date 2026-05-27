@@ -1,5 +1,5 @@
 name: FieldOps Incident Report
-about: BDD 사고 대응 시나리오를 포함한 장애 이슈를 생성합니다.
+description: BDD 사고 대응 시나리오를 포함한 장애 이슈를 생성합니다.
 title: "[INCIDENT] "
 labels: ["incident", "fieldops"]
 body:

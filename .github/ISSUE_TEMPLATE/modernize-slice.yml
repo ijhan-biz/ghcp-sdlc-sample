@@ -1,5 +1,5 @@
 name: FieldOps Modernize Slice
-about: Modernize 단계를 위한 PR 슬라이스 계획 이슈
+description: Modernize 단계를 위한 PR 슬라이스 계획 이슈
 title: "[MODERNIZE] "
 labels: ["modernize", "fieldops"]
 body:

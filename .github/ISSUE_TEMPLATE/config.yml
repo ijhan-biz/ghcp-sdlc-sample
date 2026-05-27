@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Demo Runbook
+    url: https://github.com/ijhan-biz/ghcp-sdlc-sample/blob/main/docs/seminar-demo-clickpath.md
+    about: 라이브 데모 진행 순서와 fallback을 확인합니다.

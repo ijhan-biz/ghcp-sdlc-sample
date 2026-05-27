@@ -1,5 +1,5 @@
 name: FieldOps Model Routing Review
-about: Models 단계를 위한 모델 라우팅/비용 정책 검토 이슈
+description: Models 단계를 위한 모델 라우팅/비용 정책 검토 이슈
 title: "[MODELS] "
 labels: ["models", "fieldops"]
 body:

@@ -1,5 +1,5 @@
 name: FieldOps Tool Exception Request
-about: 비표준 도구 사용에 대한 조건부 예외 승인 요청
+description: 비표준 도구 사용에 대한 조건부 예외 승인 요청
 title: "[EXCEPTION] "
 labels: ["exception", "govern", "fieldops"]
 body:

@@ -1,5 +1,5 @@
 name: FieldOps Plan Change
-about: BDD 시나리오 기반 기능 변경 계획을 등록합니다.
+description: BDD 시나리오 기반 기능 변경 계획을 등록합니다.
 title: "[PLAN] "
 labels: ["plan", "fieldops"]
 body:

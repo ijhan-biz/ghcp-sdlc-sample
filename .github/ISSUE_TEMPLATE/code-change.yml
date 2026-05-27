@@ -1,5 +1,5 @@
 name: FieldOps Code Change
-about: Code 단계의 DDD 변경 이슈를 등록합니다.
+description: Code 단계의 DDD 변경 이슈를 등록합니다.
 title: "[CODE] "
 labels: ["code", "fieldops", "sdlc-demo"]
 body:

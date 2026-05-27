@@ -1,5 +1,5 @@
 name: FieldOps Review & Test Check
-about: Review & Test 단계 점검 이슈를 등록합니다.
+description: Review & Test 단계 점검 이슈를 등록합니다.
 title: "[REVIEW-TEST] "
 labels: ["review-test", "fieldops", "sdlc-demo"]
 body:
