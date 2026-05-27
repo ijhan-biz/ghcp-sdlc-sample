@@ -1,0 +1,97 @@
+name: slo-monitor
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  evaluate-slo:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Evaluate SLO thresholds from GitHub data
+        id: eval
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const now = new Date();
+            const since = new Date(now.getTime() - 28 * 24 * 60 * 60 * 1000).toISOString();
+
+            const runsResp = await github.rest.actions.listWorkflowRunsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100,
+              event: 'push'
+            });
+
+            const runs = runsResp.data.workflow_runs.filter((r) => r.created_at >= since);
+            const totalRuns = runs.length;
+            const successfulRuns = runs.filter((r) => r.conclusion === 'success').length;
+            const failedRuns = runs.filter((r) => r.conclusion === 'failure').length;
+
+            const checksPassRate = totalRuns > 0 ? (successfulRuns / totalRuns) * 100 : 100;
+            const deployFailureRate = totalRuns > 0 ? (failedRuns / totalRuns) * 100 : 0;
+
+            const issuesResp = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              labels: 'incident',
+              per_page: 100
+            });
+
+            const incidents = issuesResp.data.filter((i) => i.closed_at && i.created_at >= since);
+            let mttrMinutes = 0;
+            if (incidents.length > 0) {
+              const totalMinutes = incidents.reduce((acc, i) => {
+                const opened = new Date(i.created_at).getTime();
+                const closed = new Date(i.closed_at).getTime();
+                return acc + ((closed - opened) / 60000);
+              }, 0);
+              mttrMinutes = totalMinutes / incidents.length;
+            }
+
+            let breach = 0;
+            const reasons = [];
+            if (checksPassRate < 100) reasons.push(`checks_pass_rate=${checksPassRate.toFixed(2)}<100`);
+            if (deployFailureRate >= 5) reasons.push(`deploy_failure_rate=${deployFailureRate.toFixed(2)}>=5`);
+            if (mttrMinutes > 15) reasons.push(`mttr=${mttrMinutes.toFixed(2)}>15`);
+            if (reasons.length > 0) breach = 1;
+
+            core.setOutput('breach', String(breach));
+            core.setOutput('reasons', reasons.join(';') || 'none');
+            core.setOutput('checks_pass_rate', checksPassRate.toFixed(2));
+            core.setOutput('deploy_failure_rate', deployFailureRate.toFixed(2));
+            core.setOutput('mttr_minutes', mttrMinutes.toFixed(2));
+
+      - name: Open incident issue on breach
+        if: steps.eval.outputs.breach == '1'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reasons = '${{ steps.eval.outputs.reasons }}' || 'unknown';
+            const title = `SLO breach detected: ${new Date().toISOString().slice(0,10)}`;
+            const body = [
+              'Automated alert from slo-monitor workflow.',
+              '',
+              `Reasons: ${reasons}`,
+              `checks_pass_rate: ${{ steps.eval.outputs.checks_pass_rate }}%`,
+              `deploy_failure_rate: ${{ steps.eval.outputs.deploy_failure_rate }}%`,
+              `mttr_minutes: ${{ steps.eval.outputs.mttr_minutes }}`,
+              '',
+              'Required actions:',
+              '- Trigger incident runbook',
+              '- Assign IC and Comms owner',
+              '- Record rollback/mitigation result'
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['incident', 'slo-breach']
+            });

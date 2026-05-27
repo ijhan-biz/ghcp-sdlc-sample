@@ -1,0 +1,52 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  html-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate HTML structure
+        run: |
+          test -f index.html
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+          xmllint --html --noout index.html
+
+  links-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check markdown and html links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --verbose --accept 200,429,999 "**/*.md" "index.html"
+
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify stage keywords and required sections
+        run: |
+          set -euo pipefail
+          grep -q "Plan" index.html
+          grep -q "Models" index.html
+          grep -q "GitHub Required Checks" index.html
+
+      - name: Run local smoke server and HTTP probe
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8080 >/tmp/smoke.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          curl -sSf http://127.0.0.1:8080/index.html >/dev/null

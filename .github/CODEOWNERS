@@ -1,0 +1,6 @@
+# Default owner policy for demo
+* @hacbook
+
+# GitHub workflow and policy files require security/platform review
+/.github/ @hacbook
+/docs/ @hacbook

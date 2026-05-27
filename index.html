@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub SDLC 8 Demo Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-a" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-b" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="eyebrow">KT Leader Seminar 2026 · GitHub-native SDLC</p>
+    <h1>SDLC 8단계를 GitHub에서 시연하는<br />리더용 웹 쇼케이스</h1>
+    <p class="lead">
+      이 페이지는 Plan부터 Models까지 8단계를 한 화면에서 보여주고,
+      각 단계별 Demo, Gate, KPI를 동일한 형식으로 비교하도록 설계되었습니다.
+    </p>
+    <div class="hero-meta">
+      <span>정책: 표준 + 조건부 예외 승인</span>
+      <span>보안: GHAS + Required checks</span>
+      <span>운영: 동결/롤백/런북</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel intro">
+      <h2>왜 이 데모가 필요한가</h2>
+      <p>
+        단일 AI 도구의 체감 성능이 아니라, 조직이 책임질 수 있는 SDLC 운영 표준을 정의하기 위한 데모입니다.
+        모든 변경은 사람 리뷰와 자동 게이트를 통과해야 하며, 비용과 감사 추적이 가능해야 합니다.
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <h2>SDLC 8 Stages</h2>
+        <p>카드를 클릭하면 우측 상세 패널이 갱신됩니다.</p>
+      </div>
+      <div class="stage-layout">
+        <div id="stageGrid" class="stage-grid" aria-label="SDLC 8 stage cards"></div>
+        <aside class="stage-detail" id="stageDetail" aria-live="polite"></aside>
+      </div>
+    </section>
+
+    <section class="panel gates">
+      <h2>GitHub Required Checks</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Check Name</th>
+            <th>Purpose</th>
+            <th>Merge Rule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ci / html-validate</td>
+            <td>정적 페이지 문법 점검</td>
+            <td>Fail 시 머지 금지</td>
+          </tr>
+          <tr>
+            <td>ci / links-check</td>
+            <td>깨진 링크 탐지</td>
+            <td>Fail 시 머지 금지</td>
+          </tr>
+          <tr>
+            <td>ci / smoke-test</td>
+            <td>핵심 섹션 렌더링 점검</td>
+            <td>Fail 시 머지 금지</td>
+          </tr>
+          <tr>
+            <td>codeql / analyze</td>
+            <td>보안 취약 패턴 탐지</td>
+            <td>Fail 시 머지 금지</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel domains">
+      <h2>도메인 제안</h2>
+      <p>행사 친화 URL과 기본 GitHub Pages URL을 병행 운영합니다.</p>
+      <ul>
+        <li>kt-leader-seminar-sdlc8.demo.ktleaders.dev</li>
+        <li>kt-itleaders-gh-sdlc8.demo.ktleaders.dev</li>
+        <li>gh-sdlc8-showcase.ktleaders.dev</li>
+      </ul>
+      <p class="pages-url">기본 URL: https://your-org.github.io/ghcp-sdlc-sample/</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Disclaimer: 기능, 과금, 권한 정책은 계약 전 GitHub 공식 문서와 조직 설정에서 재확인하세요.</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
