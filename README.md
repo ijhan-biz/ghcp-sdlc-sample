@@ -7,6 +7,35 @@
 - GHAS(CodeQL, Dependency Review, Secret scanning)로 보안 게이트 구성
 - 운영/비용/승인 정책을 문서 + 워크플로로 함께 강제
 
+## 0. 팀 온보딩 5분 시작 가이드
+
+새 팀원이 들어오면 아래 순서만 따라도 저장소 운영 구조를 빠르게 이해할 수 있습니다.
+
+1. 데모 화면 열기
+```bash
+python3 -m http.server 8080
+# http://127.0.0.1:8080/index.html
+```
+
+2. SDLC 8단계 구조 확인
+- `index.html`의 stage 카드에서 Plan -> Models 흐름 확인
+- `docs/sdlc-stage-evidence-map.md`에서 단계별 증거 위치 확인
+
+3. 이슈 템플릿으로 1개 생성
+- `Issues -> New issue`에서 `plan-change.yml` 또는 `code-change.yml` 선택
+- Given/When/Then + AC + rollback 작성
+
+4. PR 게이트 체험
+- PR 생성 시 `.github/pull_request_template.md` 항목 채움
+- `sdlc-pr-gate`가 증거 필드 누락을 자동 검증하는지 확인
+
+5. 보안 게이트 확인
+- `Actions -> codeql.yml`, `dependency-review.yml` 실행 기록 확인
+- Security 탭에서 Code scanning/Dependency 관련 결과 확인
+
+완료 기준:
+- 이슈 1건 + PR 1건 + Actions 결과 1건을 직접 열어 설명할 수 있으면 온보딩 완료
+
 ## 1. 이 저장소로 무엇을 할 수 있나
 - 팀의 표준 개발 흐름(Plan -> Code -> Review/Test -> Deploy -> Operate)을 GitHub 상에서 재현
 - 이슈 템플릿으로 요구사항 품질(BDD 시나리오, 승인 기준)을 일정하게 유지
