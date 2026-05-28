@@ -10,7 +10,7 @@
 ## 1. Plan
 - GitHub 위치: Issues
 - 증적: .github/ISSUE_TEMPLATE/plan-change.yml
-- 시연: Given/When/Then이 포함된 계획 이슈 생성
+- 시연: Given/When/Then + AC/owner/rollback + Leader question/Stop condition이 포함된 계획 이슈 생성
 
 ## 2. Code
 - GitHub 위치: Files / Commits

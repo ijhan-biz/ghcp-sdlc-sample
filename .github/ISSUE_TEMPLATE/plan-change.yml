@@ -24,6 +24,15 @@ body:
     validations:
       required: true
 
+  - type: markdown
+    attributes:
+      value: |
+        ## Leader question
+        - 요구사항이 승인 가능한 작업 단위로 분해되었는가?
+
+        ## Stop condition
+        - AC, owner, rollback 조건이 없으면 개발 착수 금지
+
   - type: textarea
     id: acceptance
     attributes:
@@ -32,6 +41,15 @@ body:
       placeholder: |
         - [ ] AC1
         - [ ] AC2
+    validations:
+      required: true
+
+  - type: input
+    id: owner
+    attributes:
+      label: Owner
+      description: 계획 승인 및 개발 착수 책임자
+      placeholder: "@team-lead"
     validations:
       required: true
 
