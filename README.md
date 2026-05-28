@@ -29,11 +29,13 @@ python3 -m http.server 8080
 
 ## GitHub 직접 시연 케이스
 - 케이스 문서: docs/github-sdlc-cases.md
+- 실개발 운영 가이드: docs/real-dev-workflow.md
 - Stage 증적 맵: docs/sdlc-stage-evidence-map.md
 - Plan/Operate/Modernize/Models 템플릿: .github/ISSUE_TEMPLATE/
 - 자동 이슈 생성: .github/workflows/seed-sdlc-demo.yml (Actions에서 실행)
 - Review/Test 증적: .github/CODEOWNERS, .github/pull_request_template.md
 - Build/Deploy 증적: .github/workflows/ci.yml
+- PR 증적 게이트: .github/workflows/sdlc-pr-gate.yml
 - Govern/Models 증적: docs/governance-policy.md, docs/kpi-metrics.md, docs/cost-governance.md, .github/workflows/slo-monitor.yml
 - 예외 승인 이슈 템플릿: .github/ISSUE_TEMPLATE/tool-exception-request.yml
 - 발표자 클릭패스: docs/seminar-demo-clickpath.md

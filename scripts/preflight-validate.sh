@@ -79,6 +79,9 @@ require_file "$CI_WORKFLOW"
 require_regex_in_file "$CI_WORKFLOW" '(^|[[:space:]])html-validate:' 'ci.yml has job: html-validate'
 require_regex_in_file "$CI_WORKFLOW" '(^|[[:space:]])links-check:' 'ci.yml has job: links-check'
 require_regex_in_file "$CI_WORKFLOW" '(^|[[:space:]])smoke-test:' 'ci.yml has job: smoke-test'
+SDLC_PR_GATE_WORKFLOW=".github/workflows/sdlc-pr-gate.yml"
+require_file "$SDLC_PR_GATE_WORKFLOW"
+require_text_in_file "$SDLC_PR_GATE_WORKFLOW" 'SDLC PR gate failed' 'sdlc-pr-gate enforces evidence fields'
 SEED_WORKFLOW=".github/workflows/seed-sdlc-demo.yml"
 require_file "$SEED_WORKFLOW"
 require_regex_in_file "$SEED_WORKFLOW" 'workflow_dispatch' 'seed workflow is manually triggerable'
@@ -131,6 +134,7 @@ require_file "docs/sdlc-stage-evidence-map.md"
 require_file "docs/ghas-setup.md"
 require_file "docs/cost-governance.md"
 require_file "docs/seminar-demo-clickpath.md"
+require_file "docs/real-dev-workflow.md"
 
 print_header "E-1. DDD code pack"
 require_file "src/domain/incidents/Incident.js"

@@ -1,0 +1,43 @@
+name: sdlc-pr-gate
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-pr-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate SDLC PR evidence fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body || '';
+
+            const hasCheckedStage = /- \[x\] (Plan|Code|Review & Test|Build & Deploy|Operate|Modernize|Govern|Models)/i.test(body);
+            const hasIssueLink = /(#[0-9]+|https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/issues\/[0-9]+)/i.test(body);
+
+            const testEvidenceMatch = body.match(/Test evidence:\s*(.+)/i);
+            const rollbackMatch = body.match(/Rollback plan:\s*(.+)/i);
+
+            const testEvidence = (testEvidenceMatch?.[1] || '').trim();
+            const rollbackPlan = (rollbackMatch?.[1] || '').trim();
+
+            const missing = [];
+            if (!hasCheckedStage) missing.push('At least one SDLC Stage checkbox must be checked.');
+            if (!hasIssueLink) missing.push('PR body must include at least one linked issue (#123 or full issue URL).');
+            if (!testEvidence || testEvidence === '-' || /TBD/i.test(testEvidence)) missing.push('Test evidence must be provided.');
+            if (!rollbackPlan || rollbackPlan === '-' || /TBD/i.test(rollbackPlan)) missing.push('Rollback plan must be provided.');
+
+            if (missing.length > 0) {
+              const details = missing.map((m) => `- ${m}`).join('\n');
+              core.setFailed(`SDLC PR gate failed:\n${details}`);
+              return;
+            }
+
+            core.info('SDLC PR gate passed.');

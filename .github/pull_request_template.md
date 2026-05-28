@@ -12,6 +12,11 @@
 - [ ] Govern
 - [ ] Models
 
+## Stage Issue Link(s)
+- Plan issue:
+- Code issue:
+- Additional stage issue(s):
+
 ## AI-Assisted Disclosure
 - [ ] This PR used AI assistance
 - [ ] I reviewed all generated code
