@@ -7,6 +7,21 @@
 - GHAS(CodeQL, Dependency Review, Secret scanning)로 보안 게이트 구성
 - 운영/비용/승인 정책을 문서 + 워크플로로 함께 강제
 
+## 예시들은 하나의 소프트웨어 흐름으로 이어집니다
+
+이 저장소의 단계별 예시(이슈 #1~#8, 데모 PR #10~#12)는 개별 샘플이 아니라, **하나의 기능이 기획부터 운영·개선까지 흐르는 모습**을 보여 주도록 연결되어 있습니다. "FieldOps 인시던트 포털에 우선순위 자동 분류 기능을 추가한다"는 가상의 변경을 따라가면 다음과 같이 사용됩니다.
+
+1. **Plan (#1)** — `plan-change.yml`로 요구사항을 Given/When/Then + 승인 기준(AC) + rollback으로 정의합니다. 무엇을, 왜, 어떤 조건에서 완료로 볼지 합의합니다.
+2. **Code (#2)** — `code-change.yml`로 DDD 레이어(`src/domain`, `src/application`) 변경 범위와 테스트 계획을 정리하고 구현을 시작합니다.
+3. **Review & Test (#3 → PR #11)** — 변경을 PR로 올리면 `sdlc-pr-gate`와 required checks가 증거 누락을 검증합니다. Review/Test 게이트 데모 PR이 이 단계의 실제 화면입니다.
+4. **Build & Deploy (#4)** — `.github/workflows`의 Actions 실행 로그로 빌드·배포 결과와 실패 대응을 기록합니다.
+5. **Operate (#5)** — 배포 후 장애가 생기면 `incident-report.yml`로 타임라인·원인·조치를 남깁니다. (이전에 자동 누적되던 SLO breach 알림이 이 단계의 입력이 됩니다.)
+6. **Modernize (#6)** — 운영에서 얻은 교훈으로 리팩터링/PR 슬라이스를 계획해 다음 Plan 사이클로 되돌립니다.
+7. **Govern (#7 → PR #12)** — 위 흐름 전체에 예외·승인이 필요할 때 거버넌스 점검과 예외 승인 증거 PR로 통제합니다.
+8. **Models (#8)** — 각 단계에서 어떤 AI 모델을 어떤 권한(Work Tier T0-T4, premium 승인)으로 썼는지 라우팅 정책으로 기록합니다.
+
+즉, 위에서 아래로 읽으면 **Plan → Code → Review/Test → Build/Deploy → Operate → Modernize**가 한 바퀴 도는 개발 루프이고, **Govern·Models**는 그 루프 전체를 가로지르는 통제 축입니다. 각 예시 이슈/PR을 순서대로 열어 보면 한 기능이 GitHub 위에서 어떻게 증거를 남기며 흘러가는지 그대로 따라갈 수 있습니다.
+
 ## 0. 팀 온보딩 5분 시작 가이드
 
 새 팀원이 들어오면 아래 순서만 따라도 저장소 운영 구조를 빠르게 이해할 수 있습니다.
